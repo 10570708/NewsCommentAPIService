@@ -24,9 +24,26 @@ namespace NewsCommentAPIService.Controllers
 
         // GET: api/Comments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetComment()
+        public async Task<ActionResult<IEnumerable<Comment>>> GetComment(int reportId, Guid? createdBy, bool desc = true)
         {
-            return await _context.Comment.ToListAsync();
+		var guidIsEmpty = (createdBy == null || createdBy.Value == Guid.Empty);
+		
+		// Baseline for select for the reports	  		
+		var comments = from c in _context.Comment select c;	  		
+		
+		comments = comments.Where(x => x.ReportId == reportId);
+		
+       	    	if (!guidIsEmpty)
+       	    	{
+       	    		comments = comments.Where(x => x.CreatedBy == createdBy);
+		}
+
+		if (desc) 
+		{
+			comments = comments.OrderByDescending(s => s.UpdatedDate);
+		}
+		
+		return await comments.ToListAsync();
         }
 
         // GET: api/Comments/5
@@ -79,10 +96,10 @@ namespace NewsCommentAPIService.Controllers
         [HttpPost]
         public async Task<ActionResult<Comment>> PostComment(Comment comment)
         {
-            comment.CreatedBy = new Guid();
+            //comment.CreatedBy = new Guid();
             comment.UpdatedDate = DateTime.Now;
             comment.CreatedDate = DateTime.Now;
-            comment.ReportId = comment.Id;
+            //comment.ReportId = comment.Id;
 
             _context.Comment.Add(comment);
             await _context.SaveChangesAsync();
