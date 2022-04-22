@@ -70,7 +70,12 @@ namespace NewsCommentAPIService.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(comment).State = EntityState.Modified;
+	    var comment_orig = await _context.Comment.FindAsync(id);
+
+            comment_orig.UpdatedDate = DateTime.Now;
+            comment_orig.CommentText = comment.CommentText;
+
+            _context.Entry(comment_orig).State = EntityState.Modified;
 
             try
             {
@@ -119,6 +124,31 @@ namespace NewsCommentAPIService.Controllers
 
             _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
+       // DELETE: api/Comments/Report/5
+        [HttpDelete, Route("Reports/{id}")]
+        public async Task<IActionResult> DeleteComments(int id)
+        {
+        
+ 		var match = await _context.Comment.Where(x => x.ReportId == id).ToListAsync();
+   		if(match.Any())
+   		{
+   			foreach (var comm in match)
+   			{
+   		      		_context.Comment.Remove(comm);
+   		      	}
+            	      
+   		}        
+   		await _context.SaveChangesAsync();
+
+            if (match == null)
+            {
+                return NotFound();
+            }
 
             return NoContent();
         }
