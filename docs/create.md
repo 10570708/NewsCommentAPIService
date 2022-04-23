@@ -30,11 +30,11 @@
 - Add Microsoft.EntityFrameworkCore.Design
 - Click Add
 
-	- Model Class : Report.cs
+	- Model Class : Comment.cs
 	- Data Context Class -> Click + 
-	- Default entered 'NewsReportAPIService.Data.NewsReportAPIServiceContext' 
+	- Default entered 'NewsCommentAPIService.Data.NewsCommentAPIServiceContext' 
 	- Click Add
-	- Controller Name default entered : 'ReportsController' 
+	- Controller Name default entered : 'CommentsController' 
 	- Click Add
 	
 The bones of the API are now created.
