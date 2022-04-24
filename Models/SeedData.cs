@@ -14,7 +14,7 @@ namespace NewsCommentAPIService.Models
                 serviceProvider.GetRequiredService<
                     DbContextOptions<NewsCommentAPIServiceContext>>()))
             {
-                 Look for any movies.
+                // Look for any Comments.
                 if (context.Comment.Any())
                 {
                     return;   // DB has been seeded
