@@ -42,24 +42,21 @@ Clone the files locally using either
 - In the Package Manager Console run the commands: 
     *(wait for the build to complete after each command)*
  
-1.    `Add-Migration InitialCreate`
+1.  `Add-Migration InitialCreate`
 
-    Output:  
+*Expected Output:*
     
-    `Build started...` 
+`Build started...` followed by `Build succeeded`
 
-    `Build succeeded`
+2. `Update-Database`
 
-2.    `Update-Database`
-
-   Output:  
+*Expected Output:*
     
-    `Build started...` 
-
+`Build started...` followed by 
     `Build succeeded`
 
 
-**The package dependencies shuld be managed automatically, but if not, use NuGet Package Manager to install them. The list of required NuGet Packages is: **
+***The package dependencies should be managed automatically, but if not, use NuGet Package Manager to install them. The list of required NuGet Packages is:***
 
 ![NuGet](images/NuGet.jpg)
 
